@@ -1,27 +1,104 @@
-import React from 'react';
-import { Container, Grid, TextField, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import './ProfileSetup.css';  // Asegúrate de crear este archivo CSS
 
 const ProfileSetup = () => {
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [size, setSize] = useState('');
+
+  const handleGenderClick = (gender) => {
+    setGender(gender);
+  };
+
+  const handleSizeClick = (size) => {
+    setSize(size);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Lógica para enviar datos al backend
+    console.log({ name, age, gender, size });
+  };
+
   return (
-    <Container maxWidth="sm">
-      <Grid container spacing={3} alignItems="center" justifyContent="center" style={{ minHeight: '100vh' }}>
-        <Grid item xs={12}>
-          <Typography variant="h4" align="center">Setup Profile</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField fullWidth label="Dog's Name" variant="outlined" />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField fullWidth label="Breed" variant="outlined" />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField fullWidth label="Age" variant="outlined" />
-        </Grid>
-        <Grid item xs={12}>
-          <Button fullWidth variant="contained" color="primary">Continue</Button>
-        </Grid>
-      </Grid>
-    </Container>
+    <div className="container">
+      <form onSubmit={handleSubmit} className="form">
+        <div className="form-group">
+          <label className="label">My first name is</label>
+          <input
+            className="input"
+            type="text"
+            placeholder="Enter name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label className="label">My birthday is</label>
+          <input
+            className="input"
+            type="date"
+            placeholder="YYYY/MM/DD"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label className="label">I am a</label>
+          <div className="button-group">
+            <button
+              type="button"
+              className={`button ${gender === 'Female' ? 'active' : ''}`}
+              onClick={() => handleGenderClick('Female')}
+            >
+              FEMALE
+            </button>
+            <button
+              type="button"
+              className={`button ${gender === 'Male' ? 'active' : ''}`}
+              onClick={() => handleGenderClick('Male')}
+            >
+              MALE
+            </button>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="label">Size</label>
+          <div className="button-group">
+            <button
+              type="button"
+              className={`button ${size === 'Small' ? 'active' : ''}`}
+              onClick={() => handleSizeClick('Small')}
+            >
+              SMALL
+            </button>
+            <button
+              type="button"
+              className={`button ${size === 'Medium' ? 'active' : ''}`}
+              onClick={() => handleSizeClick('Medium')}
+            >
+              MEDIUM
+            </button>
+            <button
+              type="button"
+              className={`button ${size === 'Large' ? 'active' : ''}`}
+              onClick={() => handleSizeClick('Large')}
+            >
+              LARGE
+            </button>
+          </div>
+        </div>
+        <div className="form-group">
+          <button
+            type="submit"
+            className="submit-button"
+          >
+            CONTINUE
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
