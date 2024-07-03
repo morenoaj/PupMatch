@@ -18,13 +18,13 @@ const Login = () => {
   return (
     <div className="login-background">
       <Container maxWidth="xs" className="login-container">
-        <Typography variant="h4" className="page-title">Login</Typography>
         <div className="title-container">
           <img src={require("./huella.png")} alt="PupMatch Logo" className="logo-image" />
           <Typography variant="h4" align="center" className="login-title">
             PupMatch
           </Typography>
         </div>
+        <Typography variant="h4" className="page-title">Login</Typography>
         <Typography variant="body2" align="center" className="login-subtitle">
           By tapping Create Account or Sign In, you agree to our <Link to="#">Terms</Link>. Learn how we process your data in our <Link to="#">Privacy Policy</Link> and <Link to="#">Cookies Policy</Link>.
         </Typography>
