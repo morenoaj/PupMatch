@@ -9,15 +9,10 @@ import { ThemeProvider } from '@emotion/react';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
-);
-
-ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
-  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
