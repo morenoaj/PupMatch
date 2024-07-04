@@ -1,11 +1,11 @@
 import React from "react";
 import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { auth, googleProvider } from "./FirebaseSingIn/Firebase";
+import { auth, googleProvider } from "../FirebaseSingIn/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import "./Login.css";
 
-const SignUp = () => {
+const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -18,13 +18,13 @@ const SignUp = () => {
   return (
     <div className="login-background">
       <Container maxWidth="xs" className="login-container">
-        <Typography variant="h4" className="page-title">Sign Up</Typography>
         <div className="title-container">
-          <img src={require("./huella.png")} alt="PupMatch Logo" className="logo-image" />
+          <img src={require("../Assets/huella.png")} alt="PupMatch Logo" className="logo-image" />
           <Typography variant="h4" align="center" className="login-title">
             PupMatch
           </Typography>
         </div>
+        <Typography variant="h4" className="page-title">Login</Typography>
         <Typography variant="body2" align="center" className="login-subtitle">
           By tapping Create Account or Sign In, you agree to our <Link to="#">Terms</Link>. Learn how we process your data in our <Link to="#">Privacy Policy</Link> and <Link to="#">Cookies Policy</Link>.
         </Typography>
@@ -36,7 +36,7 @@ const SignUp = () => {
               className="login-button login-google"
               onClick={handleGoogleLogin}
             >
-              Sign up with Google
+              Sign in with Google
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -46,7 +46,7 @@ const SignUp = () => {
               className="login-button login-facebook"
               onClick={handleGoogleLogin}
             >
-              Sign up with Facebook
+              Sign in with Facebook
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -56,12 +56,12 @@ const SignUp = () => {
               className="login-button login-github"
               onClick={handleGoogleLogin}
             >
-              Sign up with Github
+              Sign in with Github
             </Button>
           </Grid>
           <Grid item xs={12}>
             <Typography align="center" className="login-footer">
-              <Link to="/">Already have an account? Sign in</Link>
+              <Link to="/signup">Trouble Signing In?</Link>
             </Typography>
           </Grid>
         </Grid>
@@ -70,4 +70,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
