@@ -1,9 +1,9 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import ProfileSetup from './components/ProfileSetup';
+import Login from './components/Auth/Login';
+import SignUp from './components/Auth/SignUp';
+import PetProfile from './components/Register/PetProfile';
 import SwipeScreen from './components/SwipeScreen';
 import MatchScreen from './components/MatchScreen';
 import Settings from './components/Settings';
@@ -15,7 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile-setup" element={<ProfileSetup />} />
+        <Route path="/petprofile" element={<PetProfile />} />
         <Route path="/swipe" element={<SwipeScreen />} />
         <Route path="/matches" element={<MatchScreen />} />
         <Route path="/settings" element={<Settings />} />
