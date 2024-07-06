@@ -8,6 +8,8 @@ import SwipeScreen from './components/SwipeScreen';
 import MatchScreen from './components/MatchScreen';
 import Settings from './components/Settings';
 import AddPhotos from './components/Register/AddPhotos';
+import Prueba from './components/Prueba';
+
 
 const App = () => {
   return (
@@ -20,6 +22,7 @@ const App = () => {
         <Route path="/matches" element={<MatchScreen />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/addphotos" element={<AddPhotos />} />
+        <Route path="/prueba" element={<Prueba />} />
       </Routes>
     </Router>
   );

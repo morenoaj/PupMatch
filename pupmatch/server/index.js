@@ -1,5 +1,4 @@
 const express = require('express');
-require('dotenv').config();
 const db = require('./Firebaseadmin'); // Importar el archivo correctamente
 
 const app = express();

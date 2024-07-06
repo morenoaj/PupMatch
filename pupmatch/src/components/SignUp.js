@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { auth, googleProvider } from "./FirebaseSingIn/Firebase";
+import { auth, googleProvider } from "./FirebaseSingIn/Firebase.js";
 import { signInWithPopup } from "firebase/auth";
 import "./Login.css";
 
