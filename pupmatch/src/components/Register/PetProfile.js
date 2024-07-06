@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ProfileSetup.css';  // Asegúrate de crear este archivo CSS
+import './PetProfile.css';  // Asegúrate de crear este archivo CSS
 
 const ProfileSetup = () => {
   const [name, setName] = useState('');

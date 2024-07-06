@@ -20,7 +20,7 @@ PupMatch es una aplicación web diseñada para ayudar a los dueños de mascotas 
 
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/pupmatch.git
+    git clone https://github.com/morenoaj/pupmatch.git
     ```
 2. Navega al directorio del proyecto:
     ```bash

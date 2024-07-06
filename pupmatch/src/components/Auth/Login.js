@@ -1,7 +1,8 @@
 import React from "react";
 import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { auth, googleProvider } from "./FirebaseSingIn/Firebase.js";
+import { auth, googleProvider } from "../FirebaseSingIn/Firebase";
+
 import { signInWithPopup } from "firebase/auth";
 import "./Login.css";
 
@@ -19,7 +20,7 @@ const Login = () => {
     <div className="login-background">
       <Container maxWidth="xs" className="login-container">
         <div className="title-container">
-          <img src={require("./huella.png")} alt="PupMatch Logo" className="logo-image" />
+          <img src={require("../Assets/huella.png")} alt="PupMatch Logo" className="logo-image" />
           <Typography variant="h4" align="center" className="login-title">
             PupMatch
           </Typography>
