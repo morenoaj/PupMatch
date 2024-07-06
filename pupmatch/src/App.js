@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
 import PetProfile from './components/Register/PetProfile';
-import SwipeScreen from './components/SwipeScreen';
+import SwipeScreen from './components/SwipeCards/SwipeScreen';
 import MatchScreen from './components/MatchScreen';
 import Settings from './components/Settings';
 import AddPhotos from './components/Register/AddPhotos';
