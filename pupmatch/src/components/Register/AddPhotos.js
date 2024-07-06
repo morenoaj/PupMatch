@@ -54,7 +54,7 @@ const AddPhotos = ({ onNext }) => {
         onClick={onNext}
         disabled={photos.length < 2}
       >
-        CONTINUE
+        Register
       </Button>
     </Container>
   );

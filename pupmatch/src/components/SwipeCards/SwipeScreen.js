@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardMedia, CardContent, Typography, IconButton, Box, Grid, Button, Avatar } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, IconButton, Box, Grid, Avatar, Button } from '@mui/material';
 import { ThumbUp, ThumbDown, Star, FlashOn, RotateLeft, Chat, People } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import './SwipeScreen.css';
@@ -23,24 +23,6 @@ const profiles = [
     photo: f1,
     description: 'Loves playing fetch',
     interests: ['Running', 'Eating', 'Sleeping'],
-  },
-  {
-    id: 1,
-    name: 'Max',
-    age: 3,
-    breed: 'Golden Retriever',
-    photo: f1,  // Utiliza la imagen importada
-    description: 'Friendly and energetic',
-    interests: ['Movies', 'Walking', 'Shopping', 'Online Games', 'Crafts'],
-  },
-  {
-    id: 1,
-    name: 'Max',
-    age: 3,
-    breed: 'Golden Retriever',
-    photo: f1,  // Utiliza la imagen importada
-    description: 'Friendly and energetic',
-    interests: ['Movies', 'Walking', 'Shopping', 'Online Games', 'Crafts'],
   },
   // Agrega más perfiles aquí
 ];

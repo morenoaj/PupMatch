@@ -1,5 +1,28 @@
 import React, { useState } from 'react';
-import './PetProfile.css';  // Asegúrate de crear este archivo CSS
+import {
+  Container,
+  TextField,
+  Button,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  Paper,
+  Box,
+} from '@mui/material';
+import { styled } from '@mui/system';
+import './PetProfile.css';
+
+const CustomButton = styled(Button)({
+  background: 'linear-gradient(90deg, #0575F9   0%, #2BCDE3  100%)',
+  color: 'white',
+  fontSize: '16px',
+  padding: '12px',
+  borderRadius: '8px',
+  textTransform: 'none',
+  '&:hover': {
+    background: 'linear-gradient(90deg, #0575F9   0%, #2BCDE3  100%)',
+  },
+});
 
 const ProfileSetup = () => {
   const [name, setName] = useState('');
@@ -7,12 +30,12 @@ const ProfileSetup = () => {
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
 
-  const handleGenderClick = (gender) => {
-    setGender(gender);
+  const handleGenderClick = (event, newGender) => {
+    setGender(newGender);
   };
 
-  const handleSizeClick = (size) => {
-    setSize(size);
+  const handleSizeClick = (event, newSize) => {
+    setSize(newSize);
   };
 
   const handleSubmit = (e) => {
@@ -22,83 +45,61 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="container">
+    <Container component={Paper} elevation={6} className="container">
       <form onSubmit={handleSubmit} className="form">
-        <div className="form-group">
-          <label className="label">My first name is</label>
-          <input
-            className="input"
-            type="text"
-            placeholder="Enter name"
+        <Typography variant="h4" component="h1" align="center" gutterBottom>
+          Create Your Pet's Profile
+        </Typography>
+        <Box className="form-group">
+          <TextField
+            label="My first name is"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </div>
-        <div className="form-group">
-          <label className="label">My birthday is</label>
-          <input
-            className="input"
+        </Box>
+        <Box className="form-group">
+          <TextField
+            label="My birthday is"
             type="date"
-            placeholder="YYYY/MM/DD"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            InputLabelProps={{ shrink: true }}
             value={age}
             onChange={(e) => setAge(e.target.value)}
           />
-        </div>
-        <div className="form-group">
-          <label className="label">I am a</label>
-          <div className="button-group">
-            <button
-              type="button"
-              className={`button ${gender === 'Female' ? 'active' : ''}`}
-              onClick={() => handleGenderClick('Female')}
-            >
-              FEMALE
-            </button>
-            <button
-              type="button"
-              className={`button ${gender === 'Male' ? 'active' : ''}`}
-              onClick={() => handleGenderClick('Male')}
-            >
-              MALE
-            </button>
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="label">Size</label>
-          <div className="button-group">
-            <button
-              type="button"
-              className={`button ${size === 'Small' ? 'active' : ''}`}
-              onClick={() => handleSizeClick('Small')}
-            >
-              SMALL
-            </button>
-            <button
-              type="button"
-              className={`button ${size === 'Medium' ? 'active' : ''}`}
-              onClick={() => handleSizeClick('Medium')}
-            >
-              MEDIUM
-            </button>
-            <button
-              type="button"
-              className={`button ${size === 'Large' ? 'active' : ''}`}
-              onClick={() => handleSizeClick('Large')}
-            >
-              LARGE
-            </button>
-          </div>
-        </div>
-        <div className="form-group">
-          <button
-            type="submit"
-            className="submit-button"
-          >
-            CONTINUE
-          </button>
-        </div>
+        </Box>
+        <Typography variant="subtitle1" className="label">I am a</Typography>
+        <ToggleButtonGroup
+          value={gender}
+          exclusive
+          onChange={handleGenderClick}
+          fullWidth
+          className="button-group"
+        >
+          <ToggleButton value="Female" className="button">FEMALE</ToggleButton>
+          <ToggleButton value="Male" className="button">MALE</ToggleButton>
+        </ToggleButtonGroup>
+        <Typography variant="subtitle1" className="label">Size</Typography>
+        <ToggleButtonGroup
+          value={size}
+          exclusive
+          onChange={handleSizeClick}
+          fullWidth
+          className="button-group"
+        >
+          <ToggleButton value="Small" className="button">SMALL</ToggleButton>
+          <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
+          <ToggleButton value="Large" className="button">LARGE</ToggleButton>
+        </ToggleButtonGroup>
+        <CustomButton type="submit" fullWidth className="submit-button">
+          CONTINUE
+        </CustomButton>
       </form>
-    </div>
+    </Container>
   );
 };
 
