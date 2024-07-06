@@ -1,0 +1,135 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .swipe-screen {
+    display: flex;
+    height: 100vh;
+    background-color: #2c2c2c;
+    color: white;
+  }
+  
+  .sidebar {
+    width: 300px;
+    background-color: #1f1f1f;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+  
+  .profile-avatar {
+    margin-bottom: 16px;
+    width: 120px;  /* Ajusta este valor para cambiar el tamaño */
+    height: 120px;  /* Ajusta este valor para cambiar el tamaño */
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+  }
+  
+  .sidebar-title {
+    color: white;
+    margin-bottom: 16px;
+  }
+  
+  .sidebar-content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Ajusta espacio entre los elementos */
+  }
+  
+  .sidebar-grid-item {
+    padding: 4px; /* Ajusta el espacio entre los elementos */
+  }
+  
+  .sidebar-avatar {
+    width: 100%;  /* Ajusta este valor para cambiar el tamaño */
+    height: 80px;  /* Ajusta este valor para cambiar el tamaño */
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #fff;
+  }
+  
+  .bottom-menu {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .menu-button {
+    color: white;
+    flex: 1;
+  }
+  
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-card {
+    width: 100%;
+    max-width: 600px;
+    background-color: #333;
+    color: white;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  
+  .interest-chip {
+    background-color: #555;
+    border-radius: 16px;
+    padding: 8px;
+    margin: 4px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .dislike-button, .like-button, .star-button, .super-like-button, .rewind-button {
+    color: white;
+    font-size: 36px;
+  }
+  
+  .dislike-button {
+    color: red;
+  }
+  
+  .like-button {
+    color: green;
+  }
+  
+  .star-button {
+    color: blue;
+  }
+  
+  .super-like-button {
+    color: purple;
+  }
+  
+  .rewind-button {
+    color: orange;
+  }
+  
