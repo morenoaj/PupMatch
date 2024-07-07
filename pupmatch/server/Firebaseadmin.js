@@ -5,7 +5,7 @@ const serviceAccount = require('./pupmatch-5e118-firebase-adminsdk-vo2qg-61114b0
 
 const firebaseConfig = {
     credential: admin.credential.cert(serviceAccount),
-    databaseURL:  ""// Replace with your database URL
+    databaseURL:  "https://pupmatch-5e118-default-rtdb.firebaseio.com/"// Replace with your database URL
 };
 
 const app = admin.initializeApp(firebaseConfig);

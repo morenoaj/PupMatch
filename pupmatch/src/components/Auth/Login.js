@@ -1,16 +1,30 @@
 import React from "react";
 import { Container, Grid, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { auth, googleProvider } from "../FirebaseSingIn/Firebase";
-
+import { Link, useNavigate } from "react-router-dom";
+import { auth, googleProvider } from "../FirebaseSingIn/Firebase.js";
 import { signInWithPopup } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../FirebaseSingIn/Firebase.js";
 import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const handleGoogleLogin = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      alert("Logged in successfully");
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // Almacenar la información del usuario en Firestore
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, {
+        uid: user.uid
+      }, { merge: true }); // Usa merge para evitar sobrescribir datos existentes
+
+      console.log("Logged in successfully");
+
+      // Redirigir a ProfileSetup
+      navigate("/petprofile");
     } catch (error) {
       alert(error.message);
     }

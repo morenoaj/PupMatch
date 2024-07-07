@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { auth, googleProvider } from "./FirebaseSingIn/Firebase";
+import { auth, googleProvider } from "../FirebaseSingIn/Firebase.js";
 import { signInWithPopup } from "firebase/auth";
 import "./Login.css";
 
@@ -20,7 +20,7 @@ const SignUp = () => {
       <Container maxWidth="xs" className="login-container">
         <Typography variant="h4" className="page-title">Sign Up</Typography>
         <div className="title-container">
-          <img src={require("./huella.png")} alt="PupMatch Logo" className="logo-image" />
+          <img src={require("../Assets/huella.png")} alt="PupMatch Logo" className="logo-image" />
           <Typography variant="h4" align="center" className="login-title">
             PupMatch
           </Typography>
@@ -61,7 +61,7 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography align="center" className="login-footer">
-              <Link to="/">Already have an account? Sign in</Link>
+              <Link to="/petprofile">Already have an account? Sign in</Link>
             </Typography>
           </Grid>
         </Grid>
