@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./pupmatch-5e118-firebase-adminsdk-vo2qg-61114b0055.json');
+const serviceAccount = require('./pupmatch-5e118-firebase-adminsdk-vo2qg-374ae9a6b9.json');
 
 // server/firebaseAdmin.js
 

@@ -15,7 +15,7 @@ const BreedSelection = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const petId = params.get('petId');
+  const petId = params.get('petId'); // Asegúrate de que estás obteniendo el parámetro correcto
 
   const handleBreedClick = (breed) => {
     setSelectedBreed(breed);
@@ -24,7 +24,7 @@ const BreedSelection = () => {
   const handleContinue = () => {
     if (selectedBreed && petId) {
       localStorage.setItem('petBreed', selectedBreed);
-      navigate(`/addphotos?petId=${petId}`);
+      navigate(`/addphotos?petId=${petId}`); // Usa petId obtenido de los parámetros
     }
   };
 

@@ -12,7 +12,7 @@ const AddPhotos = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const petId = params.get('petId');
+  const petId = params.get('petId'); // Asegúrate de que estás obteniendo el parámetro correcto
 
   const handleAddPhoto = (event) => {
     const files = Array.from(event.target.files);
@@ -42,8 +42,8 @@ const AddPhotos = () => {
       const size = localStorage.getItem('petSize');
       const breed = localStorage.getItem('petBreed');
 
-      await setDoc(doc(db, 'pets', petId), { name, age, gender, size, breed, photos: photoURLs });
-      navigate('/Welcome'); // Navega a la página principal o a donde quieras ir después de registrar
+      await setDoc(doc(db, 'pets', petId), { name, age, gender, size, breed, photos: photoURLs }, { merge: true });
+      navigate('/welcome'); // Navega a la página principal o a donde quieras ir después de registrar
     }
   };
 
