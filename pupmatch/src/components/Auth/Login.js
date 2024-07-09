@@ -3,7 +3,7 @@ import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../FirebaseSingIn/Firebase.js";
 import { signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../FirebaseSingIn/Firebase.js";
 import "./Login.css";
 
@@ -15,16 +15,17 @@ const Login = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      // Almacenar la información del usuario en Firestore
-      const userRef = doc(db, "users", user.uid);
-      await setDoc(userRef, {
-        uid: user.uid
-      }, { merge: true }); // Usa merge para evitar sobrescribir datos existentes
+      // Verificar si el usuario ya existe en Firestore
+      const userRef = doc(db, "pets", user.uid);
+      const docSnap = await getDoc(userRef);
 
-      console.log("Logged in successfully");
-
-      // Redirigir a ProfileSetup
-      navigate("/petprofile");
+      if (!docSnap.exists()) {
+        // Si el usuario no existe, redirigir a la página de registro
+        navigate("/signup");
+      } else {
+        // Si el usuario existe, redirigir a la página de perfil
+        navigate("/editprofile");
+      }
     } catch (error) {
       alert(error.message);
     }
@@ -76,7 +77,7 @@ const Login = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography align="center" className="login-footer">
-              <Link to="/signup">Trouble Signing In?</Link>
+              <Link to="/signup">Create Account</Link>
             </Typography>
           </Grid>
         </Grid>

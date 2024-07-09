@@ -39,13 +39,21 @@ const ProfileSetup = () => {
     e.preventDefault();
     const user = auth.currentUser;
     if (user) {
+      // Guardar datos en localStorage
+      localStorage.setItem('petName', name);
+      localStorage.setItem('petAge', age);
+      localStorage.setItem('petGender', gender);
+      localStorage.setItem('petSize', size);
+      
+      // Guardar datos en Firestore
       await setDoc(doc(db, 'pets', user.uid), {
         userId: user.uid,
         name,
         age,
         gender,
         size,
-      });
+      }, { merge: true });
+
       navigate(`/breedselection?petId=${user.uid}`);
     }
   };
