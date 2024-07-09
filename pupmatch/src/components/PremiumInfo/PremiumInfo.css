@@ -17,6 +17,12 @@
     position: relative;
   }
   
+  .icon-container {
+    padding: 8px;
+    border-radius: 50%;
+    padding-bottom: 25px;
+  }
+
   .back-arrow {
     width: 20px;
     height: 25px;
@@ -40,7 +46,7 @@
   .title {
     font-size: 24px;
     font-weight: bold;
-    margin-top: 8px;
+    margin-top: 100px;
     margin-bottom: 16px;
   }
   

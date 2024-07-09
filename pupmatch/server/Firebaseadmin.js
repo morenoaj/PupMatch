@@ -1,14 +1,18 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./pupmatch-5e118-firebase-adminsdk-vo2qg-374ae9a6b9.json');
 
-// server/firebaseAdmin.js
-
-const firebaseConfig = {
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL:  ""// Replace with your database URL
+const serviceAccount = {
+  type: "service_account",
+  project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+  private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
 };
 
-const app = admin.initializeApp(firebaseConfig);
-const db = app.firestore();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_ADMIN_DATABASE_URL,
+});
 
-module.exports = db;
+const db = admin.firestore();
+const storage = admin.storage();
+
+module.exports = { admin, db, storage };

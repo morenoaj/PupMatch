@@ -17,11 +17,17 @@ const PremiumInfo = () => {
   return (
     <div className="premium-info-container">
       <div className="content-container">
-        <img src={backArrow} alt="Back Arrow" className="back-arrow" />
-        <img src={pawIcon} alt="Paw Icon" className="paw-icon" />
-        <h1 className="title">Get PupMatch Premium</h1>
-        <p className="subtitle">Enjoy exclusive benefits and level up your PupMatch experience!</p>
-        
+
+        <div className="icon-container">
+          <img src={backArrow} alt="Back Arrow" className="back-arrow" />
+          <img src={pawIcon} alt="Paw Icon" className="paw-icon" />
+        </div>
+
+        <div className="header">
+          <h1 className="title">Get PupMatch Premium</h1>
+          <p className="subtitle">Enjoy exclusive benefits and level up your PupMatch experience!</p>
+        </div>
+
         <div className="benefits-section">
           <h2>Premium Benefits:</h2>
           <ul>
