@@ -12,6 +12,7 @@ import SwipeScreen from './components/SwipeCards/SwipeScreen';
 import MatchScreen from './components/MatchScreen';
 import EditProfile from './components/EditProfile/EditProfile';
 import PremiumInfo from './components/PremiumInfo/PremiumInfo';
+import RegisterUser from './components/RegisterUser/RegisterUser';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/matches" element={<MatchScreen />} />
         <Route path="/editprofile" element={<EditProfile />} /> 
         <Route path="/premiuminfo" element={<PremiumInfo />} />
+        <Route path="/registeruser" element={<RegisterUser />} />
       </Routes>
     </Router>
   );

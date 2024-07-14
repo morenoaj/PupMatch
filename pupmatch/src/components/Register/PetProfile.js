@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, ToggleButton, ToggleButtonGroup, Typography, Paper, Box } from '@mui/material';
+import { Container, TextField, Button, ToggleButton, ToggleButtonGroup, Typography, Paper, Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
 import { styled } from '@mui/system';
 import { getAuth } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -12,7 +12,7 @@ const CustomButton = styled(Button)({
   color: 'white',
   fontSize: '16px',
   padding: '12px',
-  borderRadius: '8px',
+  borderRadius: '50px',
   textTransform: 'none',
   '&:hover': {
     background: 'linear-gradient(90deg, #0575F9 0%, #2BCDE3 100%)',
@@ -24,6 +24,11 @@ const ProfileSetup = () => {
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
+  const [vet, setVet] = useState('');
+  const [vaccinated, setVaccinated] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [allergyDetails, setAllergyDetails] = useState('');
+  const [park, setPark] = useState('');
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -35,6 +40,14 @@ const ProfileSetup = () => {
     setSize(newSize);
   };
 
+  const handleVaccinatedChange = (event) => {
+    setVaccinated(event.target.value);
+  };
+
+  const handleAllergiesChange = (event) => {
+    setAllergies(event.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -44,6 +57,11 @@ const ProfileSetup = () => {
       localStorage.setItem('petAge', age);
       localStorage.setItem('petGender', gender);
       localStorage.setItem('petSize', size);
+      localStorage.setItem('petVet', vet);
+      localStorage.setItem('petVaccinated', vaccinated);
+      localStorage.setItem('petAllergies', allergies);
+      localStorage.setItem('petAllergyDetails', allergyDetails);
+      localStorage.setItem('petPark', park);
       
       // Guardar datos en Firestore
       await setDoc(doc(db, 'pets', user.uid), {
@@ -52,6 +70,11 @@ const ProfileSetup = () => {
         age,
         gender,
         size,
+        vet,
+        vaccinated,
+        allergies,
+        allergyDetails,
+        park
       }, { merge: true });
 
       navigate(`/breedselection?petId=${user.uid}`);
@@ -109,6 +132,59 @@ const ProfileSetup = () => {
           <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
           <ToggleButton value="Large" className="button">LARGE</ToggleButton>
         </ToggleButtonGroup>
+        <Box className="form-group">
+          <TextField
+            label="Which veterinarian does your pet visit?"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={vet}
+            onChange={(e) => setVet(e.target.value)}
+          />
+        </Box>
+        <FormControl component="fieldset" className="form-group">
+          <FormLabel component="legend">Does your pet have all vaccinations?</FormLabel>
+          <RadioGroup
+            row
+            value={vaccinated}
+            onChange={handleVaccinatedChange}
+          >
+            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel value="some" control={<Radio />} label="Some" />
+          </RadioGroup>
+        </FormControl>
+        <FormControl component="fieldset" className="form-group">
+          <FormLabel component="legend">Any allergies?</FormLabel>
+          <RadioGroup
+            row
+            value={allergies}
+            onChange={handleAllergiesChange}
+          >
+            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
+          </RadioGroup>
+          {allergies === 'yes' && (
+            <TextField
+              label="Please specify"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={allergyDetails}
+              onChange={(e) => setAllergyDetails(e.target.value)}
+            />
+          )}
+        </FormControl>
+        <Box className="form-group">
+          <TextField
+            label="Favorite park"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={park}
+            onChange={(e) => setPark(e.target.value)}
+          />
+        </Box>
         <CustomButton type="submit" fullWidth className="submit-button">
           CONTINUE
         </CustomButton>

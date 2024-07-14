@@ -6,7 +6,7 @@ body, html {
 
 .container {
   padding: 24px;
-  max-width: 500px;
+  max-width: 400px;
   margin: 40px auto;
   border-radius: 16px;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -27,12 +27,13 @@ body, html {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  gap: 8px;
 }
 
 .button {
   flex: 1;
   margin: 0 4px;
-  border-radius: 8px !important;
+  border-radius: 50px !important;
   transition: background 0.3s ease;
 }
 
@@ -52,5 +53,6 @@ body, html {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
+  filter: invert(0);
+  color: #0577f982;
 }
