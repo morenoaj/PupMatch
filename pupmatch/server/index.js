@@ -1,22 +1,20 @@
-require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const paypalRoutes = require('./routes/paypal');
 const { db } = require('./Firebaseadmin');
 const sendEmail = require('./mail');
-const subscriptionRoutes = require('./routes/subscription');
 
 const app = express();
-
+app.use(cors()); // Habilitar CORS para todas las rutas
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/paypal', paypalRoutes);
-app.use('/api', subscriptionRoutes);
-
+app.use('/api', require('./routes/subscription'));
 // Ruta para guardar los datos del perfil de la mascota
 app.post('/api/data', async (req, res) => {
   const { petId, name, age, gender, size, breed, photos, description, vet, vaccinated, allergies, allergyDetails, park } = req.body;

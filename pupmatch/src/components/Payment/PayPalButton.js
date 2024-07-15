@@ -1,8 +1,40 @@
 import React from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const PayPalButton = ({ onSuccess, onReady }) => {
   const clientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+  const navigate = useNavigate();
+
+  const handleSuccess = async (details) => {
+    console.log('Transaction completed by ' + details.payer.name.given_name);
+
+    try {
+      const idToken = await getAuth().currentUser.getIdToken(true);
+
+      const response = await fetch('http://localhost:5000/paypal/subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
+        },
+        body: JSON.stringify({
+          subscriptionStatus: 'active',
+          paymentDetails: details
+        })
+      });
+
+      if (response.ok) {
+        console.log('Subscription updated successfully');
+        navigate('/editprofile'); // Redirecciona a la página de edición de perfil
+      } else {
+        console.error('Failed to update subscription');
+      }
+    } catch (error) {
+      console.error('Error during the transaction:', error);
+    }
+  };
 
   return (
     <PayPalScriptProvider options={{ "client-id": clientId }}>
@@ -24,18 +56,11 @@ const PayPalButton = ({ onSuccess, onReady }) => {
         }}
         onApprove={(data, actions) => {
           return actions.order.capture().then((details) => {
-            alert('Transaction completed by ' + details.payer.name.given_name);
             if (onSuccess) {
               onSuccess(details);
             }
+            handleSuccess(details);
           });
-        }}
-        onCancel={() => {
-          alert('Transaction was cancelled by the user.');
-        }}
-        onError={(err) => {
-          console.error('Error occurred during the transaction', err);
-          alert('An error occurred during the transaction. Please try again.');
         }}
         onInit={(data, actions) => {
           if (onReady) {

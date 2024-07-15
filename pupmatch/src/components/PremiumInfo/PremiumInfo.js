@@ -2,15 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import "./PremiumInfo.css";
 import backArrow from "../Assets/backArrow.png";
 import pawIcon from "../Assets/paw.png";
-import PayPalButton from '../Payment/PayPalButton'; // Importar el componente del botón de PayPal
-import { getAuth } from 'firebase/auth'; // Importar getAuth de firebase/auth
-import handleSubscriptionUpdate from './handleSubscription'; // Importar el handler de suscripción
+import PayPalButton from '../Payment/PayPalButton';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import handleSubscriptionUpdate from './handleSubscription';
+import   './PremiumInfo.css';
 
 const PremiumInfo = () => {
   const [isPayPalReady, setIsPayPalReady] = useState(false);
   const [enablePayPalButtons, setEnablePayPalButtons] = useState(false);
   const [userId, setUserId] = useState(null);
   const paypalButtonContainerRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Recuperar el ID del usuario logueado
@@ -33,6 +36,7 @@ const PremiumInfo = () => {
 
   const handleDecline = () => {
     alert("Maybe later!");
+    navigate('/editprofile'); 
   };
 
   const handleSuccess = async (details) => {
@@ -55,9 +59,13 @@ const PremiumInfo = () => {
     setIsPayPalReady(true);
   };
 
+  const handleSubscriptionUpdate = async () => {
+    console.log('Subscription updated successfully');
+    navigate('/editprofile');
+  };
+
   return (
-    <div className="premium-info-background">
-      <div className="premium-info-container">
+    <div className=".add-photos-background">
         <div className="content-container">
           <img src={backArrow} alt="Back Arrow" className="back-arrow" />
           <img src={pawIcon} alt="Paw Icon" className="paww-icon" />
@@ -123,11 +131,10 @@ const PremiumInfo = () => {
               marginTop: '20px'
             }}
           >
-            <PayPalButton onSuccess={handleSuccess} onReady={handlePayPalReady} />
+            <PayPalButton onSuccess={handleSuccess} onReady={handlePayPalReady} onSubscriptionUpdate={handleSubscriptionUpdate} />
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

@@ -29,7 +29,7 @@ const Login = () => {
         navigate("/petProfile");
       } else {
         // El usuario ya existe en Firestore, redirigir a la pantalla de inicio
-        navigate("/editprofile");
+        navigate("/editProfile");
       }
     } catch (error) {
       console.error("Error al iniciar sesión con Google:", error);

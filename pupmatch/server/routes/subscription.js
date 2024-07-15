@@ -8,7 +8,6 @@ router.post('/subscription', async (req, res) => {
   const { subscriptionStatus, paymentDetails } = req.body;
 
   try {
-    // Obtener el token del ID del usuario autenticado
     const idToken = req.headers.authorization.split('Bearer ')[1];
     const decodedToken = await getAuth().verifyIdToken(idToken);
     const userUid = decodedToken.uid;
@@ -21,13 +20,15 @@ router.post('/subscription', async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    // Actualizar el estado del usuario y almacenar los detalles del pago
     await userRef.update({
       subscriptionStatus: subscriptionStatus,
       paymentDetails: paymentDetails,
+      premium: true,
+      premiumEndDate: new Date(new Date().setDate(new Date().getDate() + 29))
     });
 
     res.send('Subscription updated successfully');
+    
   } catch (err) {
     console.error('Error updating subscription:', err);
     return res.status(500).send('Error updating subscription');
