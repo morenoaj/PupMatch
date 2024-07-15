@@ -1,15 +1,40 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.pet-description-background {
+  background-image: url('../Assets/dogs3.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pet-description-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(120, 120, 120, 0.6);
+}
 .pet-description-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f8f9fa;
+  width: 100vh;
 }
 
 .content-container {
   padding: 24px;
   max-width: 400px;
-  width: 100%;
+  width:350px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -26,25 +51,6 @@
   left: 16px;
 }
 
-.header {a.pet-description-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f8f9fa;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .title {
   font-size: 24px;
   font-weight: bold;
@@ -52,15 +58,9 @@
   margin-top: 10px;
 }
 
-.paw-icon {
-  width: 24px;
-  height: 24px;
-}
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
+.paaw-icon {
+  width: 50px;
+  height: 50px;
 }
 
 .subtitle {
@@ -70,7 +70,7 @@
 }
 
 .description-input {
-  width: 100%;
+  width: 90%;
   height: 180px;
   border: 1px solid #ccc;
   border-radius: 30px;

@@ -6,6 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 import { db, storage } from '../FirebaseSingIn/Firebase'; // Asegúrate de que la ruta a firebase.js es correcta
 import './AddPhoto.css';
+import pawIcon from '../Assets/paw.png';
 
 const AddPhotos = () => {
   const [photos, setPhotos] = useState([]);
@@ -48,45 +49,48 @@ const AddPhotos = () => {
   };
 
   return (
-    <Container maxWidth="xs" className="add-photos-container">
-      <Typography variant="h4" className="title">Add photos</Typography>
-      <Typography variant="body2" className="subtitle">Add at least 2 photos to continue</Typography>
-      <Grid container spacing={2} className="photos-grid">
-        {photos.map((photo, index) => (
-          <Grid item xs={4} key={index} className="photo-item">
-            <div className="photo-wrapper">
-              <img src={photo} alt={`Photo ${index + 1}`} className="photo" />
-              <IconButton className="remove-photo-button" onClick={() => handleRemovePhoto(photo)}>
-                <Close />
-              </IconButton>
-            </div>
-          </Grid>
-        ))}
-        {photos.length < 6 && (
-          <Grid item xs={4} className="photo-item">
-            <div className="add-photo-wrapper">
-              <input
-                accept="image/*"
-                className="input-file"
-                type="file"
-                multiple
-                onChange={handleAddPhoto}
-              />
-              <Add className="add-photo-icon" />
-            </div>
-          </Grid>
-        )}
-      </Grid>
-      <Button
-        fullWidth
-        variant="contained"
-        className="continue-button"
-        onClick={handleRegister}
-        disabled={photos.length < 2}
-      >
-        Register
-      </Button>
-    </Container>
+    <div className="add-photos-background">
+      <Container maxWidth="xs" className="add-photos-container">
+      <img src={pawIcon} alt="Paw Icon" className="ppaw-icon" />
+        <Typography variant="h4" className="title">Add photos</Typography>
+        <Typography variant="body2" className="subtitle">Add at least 2 photos to continue</Typography>
+        <Grid container spacing={2} className="photos-grid">
+          {photos.map((photo, index) => (
+            <Grid item xs={4} key={index} className="photo-item">
+              <div className="photo-wrapper">
+                <img src={photo} alt={`Photo ${index + 1}`} className="photo" />
+                <IconButton className="remove-photo-button" onClick={() => handleRemovePhoto(photo)}>
+                  <Close />
+                </IconButton>
+              </div>
+            </Grid>
+          ))}
+          {photos.length < 6 && (
+            <Grid item xs={4} className="photo-item">
+              <div className="add-photo-wrapper">
+                <input
+                  accept="image/*"
+                  className="input-file"
+                  type="file"
+                  multiple
+                  onChange={handleAddPhoto}
+                />
+                <Add className="add-photo-icon" />
+              </div>
+            </Grid>
+          )}
+        </Grid>
+        <Button
+          fullWidth
+          variant="contained"
+          className={`continue-button ${photos.length >= 2 ? 'active' : ''}`}
+          onClick={handleRegister}
+          disabled={photos.length < 2}
+        >
+          Register
+        </Button>
+      </Container>
+    </div>
   );
 };
 
