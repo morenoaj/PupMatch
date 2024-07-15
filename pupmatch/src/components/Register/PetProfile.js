@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, ToggleButton, ToggleButtonGroup, Typography, Paper, Box } from '@mui/material';
+import { Container, TextField, Button, ToggleButton, ToggleButtonGroup, Typography, Paper, Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
 import { styled } from '@mui/system';
 import { getAuth } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../FirebaseSingIn/Firebase.js';
 import './PetProfile.css';
 
 const CustomButton = styled(Button)({
@@ -12,7 +10,7 @@ const CustomButton = styled(Button)({
   color: 'white',
   fontSize: '16px',
   padding: '12px',
-  borderRadius: '8px',
+  borderRadius: '50px',
   textTransform: 'none',
   '&:hover': {
     background: 'linear-gradient(90deg, #0575F9 0%, #2BCDE3 100%)',
@@ -24,6 +22,11 @@ const ProfileSetup = () => {
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
   const [size, setSize] = useState('');
+  const [vet, setVet] = useState('');
+  const [vaccinated, setVaccinated] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [allergyDetails, setAllergyDetails] = useState('');
+  const [park, setPark] = useState('');
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -35,85 +38,153 @@ const ProfileSetup = () => {
     setSize(newSize);
   };
 
+  const handleVaccinatedChange = (event) => {
+    setVaccinated(event.target.value);
+  };
+
+  const handleAllergiesChange = (event) => {
+    setAllergies(event.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
     if (user) {
-      // Guardar datos en localStorage
-      localStorage.setItem('petName', name);
-      localStorage.setItem('petAge', age);
-      localStorage.setItem('petGender', gender);
-      localStorage.setItem('petSize', size);
-      
-      // Guardar datos en Firestore
-      await setDoc(doc(db, 'pets', user.uid), {
-        userId: user.uid,
-        name,
-        age,
-        gender,
-        size,
-      }, { merge: true });
+      // Save data in local storage
+      localStorage.setItem('name', name);
+      localStorage.setItem('age', age);
+      localStorage.setItem('gender', gender);
+      localStorage.setItem('size', size);
+      localStorage.setItem('vet', vet);
+      localStorage.setItem('vaccinated', vaccinated);
+      localStorage.setItem('allergies', allergies);
+      localStorage.setItem('allergyDetails', allergyDetails);
+      localStorage.setItem('park', park);
 
       navigate(`/breedselection?petId=${user.uid}`);
+    } else {
+      console.error('No authenticated user found');
     }
   };
 
   return (
-    <Container component={Paper} elevation={6} className="container">
-      <form onSubmit={handleSubmit} className="form">
-        <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Create Your Pet's Profile
-        </Typography>
-        <Box className="form-group">
-          <TextField
-            label="My first name is"
-            variant="outlined"
+    <div className="pet-profile-background">
+      <Container component={Paper} elevation={6} className="container">
+        <form onSubmit={handleSubmit} className="form">
+          <Typography variant="h4" component="h1" align="center" gutterBottom>
+            Create Your Pet's Profile
+          </Typography>
+          <Box className="form-group">
+            <TextField
+              label="My first name is"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </Box>
+          <Box className="form-group">
+            <TextField
+              label="My birthday is"
+              type="date"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+            />
+          </Box>
+          <Typography variant="subtitle1" className="label">I am a</Typography>
+          <ToggleButtonGroup
+            value={gender}
+            exclusive
+            onChange={handleGenderClick}
             fullWidth
-            margin="normal"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Box>
-        <Box className="form-group">
-          <TextField
-            label="My birthday is"
-            type="date"
-            variant="outlined"
+            className="button-group"
+            required
+          >
+            <ToggleButton value="Female" className="button">FEMALE</ToggleButton>
+            <ToggleButton value="Male" className="button">MALE</ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant="subtitle1" className="label">Size</Typography>
+          <ToggleButtonGroup
+            value={size}
+            exclusive
+            onChange={handleSizeClick}
             fullWidth
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </Box>
-        <Typography variant="subtitle1" className="label">I am a</Typography>
-        <ToggleButtonGroup
-          value={gender}
-          exclusive
-          onChange={handleGenderClick}
-          fullWidth
-          className="button-group"
-        >
-          <ToggleButton value="Female" className="button">FEMALE</ToggleButton>
-          <ToggleButton value="Male" className="button">MALE</ToggleButton>
-        </ToggleButtonGroup>
-        <Typography variant="subtitle1" className="label">Size</Typography>
-        <ToggleButtonGroup
-          value={size}
-          exclusive
-          onChange={handleSizeClick}
-          fullWidth
-          className="button-group"
-        >
-          <ToggleButton value="Small" className="button">SMALL</ToggleButton>
-          <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
-          <ToggleButton value="Large" className="button">LARGE</ToggleButton>
-        </ToggleButtonGroup>
-        <CustomButton type="submit" fullWidth className="submit-button">
-          CONTINUE
-        </CustomButton>
-      </form>
-    </Container>
+            className="button-group"
+            required
+          >
+            <ToggleButton value="Small" className="button">SMALL</ToggleButton>
+            <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
+            <ToggleButton value="Large" className="button">LARGE</ToggleButton>
+          </ToggleButtonGroup>
+          <Box className="form-group">
+            <TextField
+              label="Which veterinarian does your pet visit?"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={vet}
+              onChange={(e) => setVet(e.target.value)}
+              required
+            />
+          </Box>
+          <FormControl component="fieldset" className="form-group" required>
+            <FormLabel component="legend">Does your pet have all vaccinations?</FormLabel>
+            <RadioGroup
+              row
+              value={vaccinated}
+              onChange={handleVaccinatedChange}
+            >
+              <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="no" control={<Radio />} label="No" />
+              <FormControlLabel value="some" control={<Radio />} label="Some" />
+            </RadioGroup>
+          </FormControl>
+          <FormControl component="fieldset" className="form-group" required>
+            <FormLabel component="legend">Any allergies?</FormLabel>
+            <RadioGroup
+              row
+              value={allergies}
+              onChange={handleAllergiesChange}
+            >
+              <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="no" control={<Radio />} label="No" />
+            </RadioGroup>
+            {allergies === 'yes' && (
+              <TextField
+                label="Please specify"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={allergyDetails}
+                onChange={(e) => setAllergyDetails(e.target.value)}
+                required
+              />
+            )}
+          </FormControl>
+          <Box className="form-group">
+            <TextField
+              label="Favorite park"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={park}
+              onChange={(e) => setPark(e.target.value)}
+              required
+            />
+          </Box>
+          <CustomButton type="submit" fullWidth className="submit-button">
+            CONTINUE
+          </CustomButton>
+        </form>
+      </Container>
+    </div>
   );
 };
 

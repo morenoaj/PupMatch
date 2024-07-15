@@ -4,35 +4,79 @@ body, html {
   font-family: 'Roboto', sans-serif;
 }
 
+.pet-profile-background {
+  position: relative;
+  background-image: url('../Assets/dogs2.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pet-profile-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color:  rgba(120, 120, 120, 0.6); /* Ajusta el nivel de transparencia aquí */
+}
+
 .container {
-  padding: 24px;
-  max-width: 500px;
-  margin: 40px auto;
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 40px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.paw-icon {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+}
+
+.page-title {
+  font-size: 35px;
+  color: #333333;
+  margin: 0;
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
 
-.label {
-  margin: 16px 0 8px 0;
-  font-weight: bold;
+.form-group {
+  margin-bottom: 20px;
 }
 
 .button-group {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  gap: 8px;
 }
 
 .button {
   flex: 1;
   margin: 0 4px;
-  border-radius: 8px !important;
+  border-radius: 50px !important;
   transition: background 0.3s ease;
 }
 
@@ -41,16 +85,27 @@ body, html {
   color: white !important;
 }
 
-.submit-button {
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.form-group {
-  margin-bottom: 16px;
+.label {
+  text-align: left;
+  margin-top: 20px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+.submit-button {
+  background: linear-gradient(90deg, #0575F9 0%, #2BCDE3 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
