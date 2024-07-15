@@ -1,17 +1,58 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./PremiumInfo.css";
 import backArrow from "../Assets/backArrow.png";
 import pawIcon from "../Assets/paw.png";
+import PayPalButton from '../Payment/PayPalButton'; // Importar el componente del botón de PayPal
+import { getAuth } from 'firebase/auth'; // Importar getAuth de firebase/auth
+import handleSubscriptionUpdate from './handleSubscription'; // Importar el handler de suscripción
 
 const PremiumInfo = () => {
+  const [isPayPalReady, setIsPayPalReady] = useState(false);
+  const [enablePayPalButtons, setEnablePayPalButtons] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const paypalButtonContainerRef = useRef(null);
+
+  useEffect(() => {
+    // Recuperar el ID del usuario logueado
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      setUserId(user.uid);
+    } else {
+      console.error("No user is logged in");
+    }
+  }, []);
+
   const handleUpgrade = () => {
-    // Lógica para actualizar a usuario premium
-    alert("Upgrade to Premium!");
+    if (isPayPalReady) {
+      setEnablePayPalButtons(true);
+    } else {
+      console.error("PayPal button is not ready yet.");
+    }
   };
 
   const handleDecline = () => {
-    // Lógica para declinar la oferta premium
     alert("Maybe later!");
+  };
+
+  const handleSuccess = async (details) => {
+    console.log('Transaction completed by ' + details.payer.name.given_name);
+    // Aquí puedes utilizar el userId para guardar la información del pago en la base de datos
+    console.log('User ID:', userId);
+    const paymentDetails = {
+      payerID: details.payer.payer_id,
+      orderID: details.id,
+      amount: details.purchase_units[0].amount.value,
+      currency: details.purchase_units[0].amount.currency_code,
+      status: details.status
+    };
+
+    await handleSubscriptionUpdate('active', paymentDetails);
+  };
+
+  const handlePayPalReady = (actions) => {
+    console.log('PayPal button is ready');
+    setIsPayPalReady(true);
   };
 
   return (
@@ -53,12 +94,36 @@ const PremiumInfo = () => {
             </div>
           </div>
           <div className="actions">
-            <button className="upgrade-button" onClick={handleUpgrade}>
+            <button
+              className="upgrade-button"
+              onClick={handleUpgrade}
+              style={{
+                padding: '12px',
+                border: 'none',
+                borderRadius: '24px',
+                background: 'linear-gradient(90deg, #0575F9 0%, #2BCDE3 100%)',
+                color: 'white',
+                fontSize: '16px',
+                cursor: 'pointer',
+                width: '48%',
+                textAlign: 'center',
+              }}
+            >
               Go Premium
             </button>
             <button className="decline-button" onClick={handleDecline}>
               No, thanks
             </button>
+          </div>
+          <div 
+            id="paypal-button-container" 
+            ref={paypalButtonContainerRef}
+            style={{
+              display: enablePayPalButtons ? 'block' : 'none',
+              marginTop: '20px'
+            }}
+          >
+            <PayPalButton onSuccess={handleSuccess} onReady={handlePayPalReady} />
           </div>
         </div>
       </div>

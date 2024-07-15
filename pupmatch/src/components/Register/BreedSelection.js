@@ -17,7 +17,7 @@ const BreedSelection = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const petId = params.get('petId'); // Asegúrate de que estás obteniendo el parámetro correcto
+  const petId = params.get('petId'); // Obtener el petId de los parámetros
 
   const handleBreedClick = (breed) => {
     setSelectedBreed(breed);
@@ -25,8 +25,9 @@ const BreedSelection = () => {
 
   const handleContinue = () => {
     if (selectedBreed && petId) {
-      localStorage.setItem('petBreed', selectedBreed);
-      navigate(`/addphotos?petId=${petId}`); // Usa petId obtenido de los parámetros
+      localStorage.setItem('breed', selectedBreed);
+
+      navigate(`/petdescription?petId=${petId}`); // Usar petId obtenido de los parámetros
     }
   };
 
@@ -34,7 +35,7 @@ const BreedSelection = () => {
     <div className="breed-selection-background">
       <div className="breed-selection-container">
         <div className="content-container">
-          <img src={backArrow} alt="Back Arrow" className="back-arrow" />
+          <img src={backArrow} alt="Back Arrow" className="back-arrow" onClick={() => navigate(-1)} />
           <img src={pawIcon} alt="Paw Icon" className="paw-icon" />
           <h1 className="title">Select your pet's breed</h1>
           <p className="subtitle">Choose the breed of your pet from the options below.</p>

@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Container, TextField, Button, ToggleButton, ToggleButtonGroup, Typography, Paper, Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
 import { styled } from '@mui/system';
 import { getAuth } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../FirebaseSingIn/Firebase.js';
 import './PetProfile.css';
 
 const CustomButton = styled(Button)({
@@ -52,32 +50,20 @@ const ProfileSetup = () => {
     e.preventDefault();
     const user = auth.currentUser;
     if (user) {
-      // Guardar datos en localStorage
-      localStorage.setItem('petName', name);
-      localStorage.setItem('petAge', age);
-      localStorage.setItem('petGender', gender);
-      localStorage.setItem('petSize', size);
-      localStorage.setItem('petVet', vet);
-      localStorage.setItem('petVaccinated', vaccinated);
-      localStorage.setItem('petAllergies', allergies);
-      localStorage.setItem('petAllergyDetails', allergyDetails);
-      localStorage.setItem('petPark', park);
-      
-      // Guardar datos en Firestore
-      await setDoc(doc(db, 'pets', user.uid), {
-        userId: user.uid,
-        name,
-        age,
-        gender,
-        size,
-        vet,
-        vaccinated,
-        allergies,
-        allergyDetails,
-        park
-      }, { merge: true });
+      // Save data in local storage
+      localStorage.setItem('name', name);
+      localStorage.setItem('age', age);
+      localStorage.setItem('gender', gender);
+      localStorage.setItem('size', size);
+      localStorage.setItem('vet', vet);
+      localStorage.setItem('vaccinated', vaccinated);
+      localStorage.setItem('allergies', allergies);
+      localStorage.setItem('allergyDetails', allergyDetails);
+      localStorage.setItem('park', park);
 
       navigate(`/breedselection?petId=${user.uid}`);
+    } else {
+      console.error('No authenticated user found');
     }
   };
 
@@ -96,6 +82,7 @@ const ProfileSetup = () => {
               margin="normal"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </Box>
           <Box className="form-group">
@@ -108,6 +95,7 @@ const ProfileSetup = () => {
               InputLabelProps={{ shrink: true }}
               value={age}
               onChange={(e) => setAge(e.target.value)}
+              required
             />
           </Box>
           <Typography variant="subtitle1" className="label">I am a</Typography>
@@ -117,6 +105,7 @@ const ProfileSetup = () => {
             onChange={handleGenderClick}
             fullWidth
             className="button-group"
+            required
           >
             <ToggleButton value="Female" className="button">FEMALE</ToggleButton>
             <ToggleButton value="Male" className="button">MALE</ToggleButton>
@@ -128,6 +117,7 @@ const ProfileSetup = () => {
             onChange={handleSizeClick}
             fullWidth
             className="button-group"
+            required
           >
             <ToggleButton value="Small" className="button">SMALL</ToggleButton>
             <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
@@ -141,9 +131,10 @@ const ProfileSetup = () => {
               margin="normal"
               value={vet}
               onChange={(e) => setVet(e.target.value)}
+              required
             />
           </Box>
-          <FormControl component="fieldset" className="form-group">
+          <FormControl component="fieldset" className="form-group" required>
             <FormLabel component="legend">Does your pet have all vaccinations?</FormLabel>
             <RadioGroup
               row
@@ -155,7 +146,7 @@ const ProfileSetup = () => {
               <FormControlLabel value="some" control={<Radio />} label="Some" />
             </RadioGroup>
           </FormControl>
-          <FormControl component="fieldset" className="form-group">
+          <FormControl component="fieldset" className="form-group" required>
             <FormLabel component="legend">Any allergies?</FormLabel>
             <RadioGroup
               row
@@ -173,6 +164,7 @@ const ProfileSetup = () => {
                 margin="normal"
                 value={allergyDetails}
                 onChange={(e) => setAllergyDetails(e.target.value)}
+                required
               />
             )}
           </FormControl>
@@ -184,6 +176,7 @@ const ProfileSetup = () => {
               margin="normal"
               value={park}
               onChange={(e) => setPark(e.target.value)}
+              required
             />
           </Box>
           <CustomButton type="submit" fullWidth className="submit-button">

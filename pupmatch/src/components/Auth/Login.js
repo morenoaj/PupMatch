@@ -1,10 +1,8 @@
 import React from "react";
-//import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../FirebaseSingIn/Firebase.js";
-//import { auth, googleProvider, facebookProvider } from "../FirebaseSingIn/Firebase.js";
 import { signInWithPopup } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Import setDoc to add new users
 import { db } from "../FirebaseSingIn/Firebase.js";
 import "./Login.css";
 import pawIcon from "../Assets/paw.png";
@@ -22,8 +20,13 @@ const Login = () => {
       const userDoc = await getDoc(userDocRef);
 
       if (!userDoc.exists()) {
-        // El usuario no existe en Firestore, redirigir a la pantalla de registro de usuario
-        navigate("/registerUser");
+        // El usuario no existe en Firestore, agregarlo a la base de datos
+        await setDoc(userDocRef, {
+          email: user.email,
+          uid: user.uid,
+        });
+        // Redirigir a la pantalla de registro de usuario
+        navigate("/petProfile");
       } else {
         // El usuario ya existe en Firestore, redirigir a la pantalla de inicio
         navigate("/home");
@@ -32,28 +35,6 @@ const Login = () => {
       console.error("Error al iniciar sesión con Google:", error);
     }
   };
-
-  /*Facebook*/
-  // const handleFacebookLogin = async () => {
-  //   try {
-  //     const result = await signInWithPopup(auth, facebookProvider);
-  //     const user = result.user;
-
-  //     // Verificar si el usuario ya existe en Firestore
-  //     const userDocRef = doc(db, "users", user.uid);
-  //     const userDoc = await getDoc(userDocRef);
-
-  //     if (!userDoc.exists()) {
-  //       // El usuario no existe en Firestore, redirigir a la pantalla de registro de usuario
-  //       navigate("/registerUser");
-  //     } else {
-  //       // El usuario ya existe en Firestore, redirigir a la pantalla de inicio
-  //       navigate("/home");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error al iniciar sesión con Facebook:", error);
-  //   }
-  // };
 
   return (
     <div className="login-background">
