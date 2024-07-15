@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { Container, Grid, Button, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../FirebaseSingIn/Firebase";
@@ -86,3 +86,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+ */

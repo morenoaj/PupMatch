@@ -2,7 +2,6 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Auth/Login';
-import SignUp from './components/Auth/SignUp';
 import PetProfile from './components/Register/PetProfile';
 import BreedSelection from './components/Register/BreedSelection';
 import PetDescription from './components/Register/PetDescription';
@@ -20,7 +19,6 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
         <Route path="/petprofile" element={<PetProfile />} />
         <Route path="/breedselection" element={<BreedSelection />} />
         <Route path="/petdescription" element={<PetDescription />} /> 
