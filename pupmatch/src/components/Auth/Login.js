@@ -38,6 +38,45 @@ const Login = () => {
 
   return (
     <div className="login-background">
+      <Container maxWidth="xs" className="login-container">
+        <div className="title-container">
+          <img src={require("../Assets/huella.png")} alt="PupMatch Logo" className="logo-image" />
+          <Typography variant="h4" align="center" className="login-title">
+            PupMatch
+          </Typography>
+        </div>
+        <Typography variant="h4" className="page-title">Login</Typography>
+        <Typography variant="body2" align="center" className="login-subtitle">
+          By tapping Create Account or Sign In, you agree to our <Link to="#">Terms</Link>. Learn how we process your data in our <Link to="#">Privacy Policy</Link> and <Link to="#">Cookies Policy</Link>.
+        </Typography>
+        <Grid container spacing={2} alignItems="center" justifyContent="center">
+          <Grid item xs={12}>
+            <Button
+              fullWidth
+              variant="contained"
+              className="login-button login-google"
+              onClick={handleGoogleLogin}
+            >
+              Sign in with Google
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              fullWidth
+              variant="contained"
+              className="login-button login-facebook"
+              onClick={handleGoogleLogin}
+            >
+              Sign in with Facebook
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography align="center" className="login-footer">
+              <Link to="/signup">Create Account</Link>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
       <div className="login-container">
         <img src={pawIcon} alt="Paw Icon" className="paw-icon" />
         <h1 className="page-title">PupMatch</h1>

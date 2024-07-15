@@ -65,16 +65,6 @@ const SignUp = () => {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              fullWidth
-              variant="contained"
-              className="login-button login-github"
-              onClick={handleGoogleLogin}
-            >
-              Sign in with Github
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
             <Typography align="center" className="login-footer">
               <Link to="/">Trouble Signing In?</Link>
             </Typography>
