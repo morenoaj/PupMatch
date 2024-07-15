@@ -82,114 +82,116 @@ const ProfileSetup = () => {
   };
 
   return (
-    <Container component={Paper} elevation={6} className="container">
-      <form onSubmit={handleSubmit} className="form">
-        <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Create Your Pet's Profile
-        </Typography>
-        <Box className="form-group">
-          <TextField
-            label="My first name is"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Box>
-        <Box className="form-group">
-          <TextField
-            label="My birthday is"
-            type="date"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </Box>
-        <Typography variant="subtitle1" className="label">I am a</Typography>
-        <ToggleButtonGroup
-          value={gender}
-          exclusive
-          onChange={handleGenderClick}
-          fullWidth
-          className="button-group"
-        >
-          <ToggleButton value="Female" className="button">FEMALE</ToggleButton>
-          <ToggleButton value="Male" className="button">MALE</ToggleButton>
-        </ToggleButtonGroup>
-        <Typography variant="subtitle1" className="label">Size</Typography>
-        <ToggleButtonGroup
-          value={size}
-          exclusive
-          onChange={handleSizeClick}
-          fullWidth
-          className="button-group"
-        >
-          <ToggleButton value="Small" className="button">SMALL</ToggleButton>
-          <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
-          <ToggleButton value="Large" className="button">LARGE</ToggleButton>
-        </ToggleButtonGroup>
-        <Box className="form-group">
-          <TextField
-            label="Which veterinarian does your pet visit?"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={vet}
-            onChange={(e) => setVet(e.target.value)}
-          />
-        </Box>
-        <FormControl component="fieldset" className="form-group">
-          <FormLabel component="legend">Does your pet have all vaccinations?</FormLabel>
-          <RadioGroup
-            row
-            value={vaccinated}
-            onChange={handleVaccinatedChange}
-          >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
-            <FormControlLabel value="some" control={<Radio />} label="Some" />
-          </RadioGroup>
-        </FormControl>
-        <FormControl component="fieldset" className="form-group">
-          <FormLabel component="legend">Any allergies?</FormLabel>
-          <RadioGroup
-            row
-            value={allergies}
-            onChange={handleAllergiesChange}
-          >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
-          </RadioGroup>
-          {allergies === 'yes' && (
+    <div className="pet-profile-background">
+      <Container component={Paper} elevation={6} className="container">
+        <form onSubmit={handleSubmit} className="form">
+          <Typography variant="h4" component="h1" align="center" gutterBottom>
+            Create Your Pet's Profile
+          </Typography>
+          <Box className="form-group">
             <TextField
-              label="Please specify"
+              label="My first name is"
               variant="outlined"
               fullWidth
               margin="normal"
-              value={allergyDetails}
-              onChange={(e) => setAllergyDetails(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-          )}
-        </FormControl>
-        <Box className="form-group">
-          <TextField
-            label="Favorite park"
-            variant="outlined"
+          </Box>
+          <Box className="form-group">
+            <TextField
+              label="My birthday is"
+              type="date"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </Box>
+          <Typography variant="subtitle1" className="label">I am a</Typography>
+          <ToggleButtonGroup
+            value={gender}
+            exclusive
+            onChange={handleGenderClick}
             fullWidth
-            margin="normal"
-            value={park}
-            onChange={(e) => setPark(e.target.value)}
-          />
-        </Box>
-        <CustomButton type="submit" fullWidth className="submit-button">
-          CONTINUE
-        </CustomButton>
-      </form>
-    </Container>
+            className="button-group"
+          >
+            <ToggleButton value="Female" className="button">FEMALE</ToggleButton>
+            <ToggleButton value="Male" className="button">MALE</ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant="subtitle1" className="label">Size</Typography>
+          <ToggleButtonGroup
+            value={size}
+            exclusive
+            onChange={handleSizeClick}
+            fullWidth
+            className="button-group"
+          >
+            <ToggleButton value="Small" className="button">SMALL</ToggleButton>
+            <ToggleButton value="Medium" className="button">MEDIUM</ToggleButton>
+            <ToggleButton value="Large" className="button">LARGE</ToggleButton>
+          </ToggleButtonGroup>
+          <Box className="form-group">
+            <TextField
+              label="Which veterinarian does your pet visit?"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={vet}
+              onChange={(e) => setVet(e.target.value)}
+            />
+          </Box>
+          <FormControl component="fieldset" className="form-group">
+            <FormLabel component="legend">Does your pet have all vaccinations?</FormLabel>
+            <RadioGroup
+              row
+              value={vaccinated}
+              onChange={handleVaccinatedChange}
+            >
+              <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="no" control={<Radio />} label="No" />
+              <FormControlLabel value="some" control={<Radio />} label="Some" />
+            </RadioGroup>
+          </FormControl>
+          <FormControl component="fieldset" className="form-group">
+            <FormLabel component="legend">Any allergies?</FormLabel>
+            <RadioGroup
+              row
+              value={allergies}
+              onChange={handleAllergiesChange}
+            >
+              <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="no" control={<Radio />} label="No" />
+            </RadioGroup>
+            {allergies === 'yes' && (
+              <TextField
+                label="Please specify"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={allergyDetails}
+                onChange={(e) => setAllergyDetails(e.target.value)}
+              />
+            )}
+          </FormControl>
+          <Box className="form-group">
+            <TextField
+              label="Favorite park"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={park}
+              onChange={(e) => setPark(e.target.value)}
+            />
+          </Box>
+          <CustomButton type="submit" fullWidth className="submit-button">
+            CONTINUE
+          </CustomButton>
+        </form>
+      </Container>
+    </div>
   );
 };
 

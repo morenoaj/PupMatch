@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../FirebaseSingIn/Firebase'; // Asegúrate de que la ruta a firebase.js es correcta
 import "./EditProfile.css"; // Asegúrate de crear este archivo CSS
-import profilePic from "../Assets/pet.png"; // Asegúrate de actualizar la ruta de la imagen
+import profilePic from "../Assets/f1.png"; // Asegúrate de actualizar la ruta de la imagen
 import editIcon from "../Assets/edit.png"; // Asegúrate de actualizar la ruta de la imagen
 
 const EditProfile = () => {

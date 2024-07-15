@@ -31,30 +31,32 @@ const BreedSelection = () => {
   };
 
   return (
-    <div className="breed-selection-container">
-      <div className="content-container">
-        <img src={backArrow} alt="Back Arrow" className="back-arrow" />
-        <img src={pawIcon} alt="Paw Icon" className="paw-icon" />
-        <h1 className="title">Select your pet's breed</h1>
-        <p className="subtitle">Choose the breed of your pet from the options below.</p>
-        <div className="breed-buttons-container">
-          {breeds.map((breed, index) => (
-            <button
-              key={index}
-              className={`breed-button ${selectedBreed === breed ? 'selected' : ''}`}
-              onClick={() => handleBreedClick(breed)}
-            >
-              {breed}
-            </button>
-          ))}
+    <div className="breed-selection-background">
+      <div className="breed-selection-container">
+        <div className="content-container">
+          <img src={backArrow} alt="Back Arrow" className="back-arrow" />
+          <img src={pawIcon} alt="Paw Icon" className="paw-icon" />
+          <h1 className="title">Select your pet's breed</h1>
+          <p className="subtitle">Choose the breed of your pet from the options below.</p>
+          <div className="breed-buttons-container">
+            {breeds.map((breed, index) => (
+              <button
+                key={index}
+                className={`breed-button ${selectedBreed === breed ? 'selected' : ''}`}
+                onClick={() => handleBreedClick(breed)}
+              >
+                {breed}
+              </button>
+            ))}
+          </div>
+          <button
+            className={`continue-button ${selectedBreed ? 'active' : ''}`}
+            onClick={handleContinue}
+            disabled={!selectedBreed}
+          >
+            CONTINUE
+          </button>
         </div>
-        <button
-          className={`continue-button ${selectedBreed ? 'active' : ''}`}
-          onClick={handleContinue}
-          disabled={!selectedBreed}
-        >
-          CONTINUE
-        </button>
       </div>
     </div>
   );
