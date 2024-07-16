@@ -1,105 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import f1 from '../Assets/f1.png';
-import f2 from '../Assets/f2.png';
-import f3 from '../Assets/f3.png';
 import likeImage from '../Assets/paw.png';
 import dislikeImage from '../Assets/nopaw.png';
 import expandImage from '../Assets/expand.png';
-import ownerAvatar from '../Assets/pet.png';
+import { db, auth, storage } from '../FirebaseSingIn/Firebase'; // Ajusta la ruta según sea necesario
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SwipeScreen.css';
-
-const profiles = [
-  {
-    id: 1,
-    name: 'Max',
-    age: 3,
-    breed: 'Golden Retriever',
-    photos: [f1, f2, f3],
-    sex: 'Male',
-    description: 'Friendly and energetic',
-    details: {
-      veterinarian: 'Dr. Smith',
-      vaccination: 'Up-to-date',
-      favoritePark: 'Central Park',
-      size: 'Large',
-      allergies: 'None',
-      owner: {
-        name: 'John Doe',
-        photo: ownerAvatar,
-        phone: '123-456-7890',
-        location: 'New York, NY'
-      }
-    },
-  },
-  {
-    id: 2,
-    name: 'Bella',
-    age: 2,
-    breed: 'Labrador',
-    photos: [f1, f2],
-    sex: 'Female',
-    description: 'Loves playing fetch',
-    details: {
-      veterinarian: 'Dr. Jones',
-      vaccination: 'Up-to-date',
-      favoritePark: 'Riverside Park',
-      size: 'Medium',
-      allergies: 'Grass',
-      owner: {
-        name: 'Jane Smith',
-        photo: ownerAvatar,
-        phone: '987-654-3210',
-        location: 'Los Angeles, CA'
-      }
-    },
-  },
-];
-
-const chats = [
-  {
-    id: 1,
-    name: 'Remy Sharp',
-    message: "I'll be in your neighborhood doing errands this…",
-    avatar: f1,
-  },
-  {
-    id: 2,
-    name: 'Travis Howard',
-    message: "Wish I could come, but I'm out of town this…",
-    avatar: f1,
-  },
-  {
-    id: 3,
-    name: 'Cindy Baker',
-    message: "Do you have Paris recommendations? Have you ever…",
-    avatar: f1,
-  },
-];
+import { getDownloadURL, ref } from 'firebase/storage';
+import { collection, getDocs, query, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const SwipeScreen = () => {
   const [view, setView] = useState('matches');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [profiles, setProfiles] = useState([]);
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            const profilesCollection = collection(db, 'pets');
+            const profilesSnapshot = await getDocs(query(profilesCollection));
+            const profilesData = await Promise.all(profilesSnapshot.docs.map(async doc => {
+              const data = doc.data();
+              const photos = await Promise.all(data.photos.map(async (photo, index) => {
+                const photoRef = ref(storage, `photos/${doc.id}/${index}`);
+                return await getDownloadURL(photoRef);
+              }));
+              return { ...data, photos, id: doc.id };
+            }));
+            setProfiles(profilesData);
+          } else {
+            console.error("No user is logged in");
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      }
+    };
+
+    fetchProfiles();
+  }, []);
 
   const handleViewChange = (newView) => {
     setView(newView);
   };
 
-  const handleLike = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+  const handleLike = async () => {
+    const currentProfile = profiles[currentIndex];
+    if (currentProfile) {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userRef = doc(db, 'users', user.uid);
+          await updateDoc(userRef, {
+            likes: arrayUnion(currentProfile.id)
+          });
+        }
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+      } catch (error) {
+        console.error('Error updating likes:', error);
+      }
+    }
   };
 
-  const handleDislike = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+  const handleDislike = async () => {
+    const currentProfile = profiles[currentIndex];
+    if (currentProfile) {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userRef = doc(db, 'users', user.uid);
+          await updateDoc(userRef, {
+            dislikes: arrayUnion(currentProfile.id)
+          });
+        }
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % profiles.length);
+      } catch (error) {
+        console.error('Error updating dislikes:', error);
+      }
+    }
   };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const currentProfile = profiles[currentIndex];
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => handleDislike(),
@@ -108,16 +96,18 @@ const SwipeScreen = () => {
     trackMouse: true
   });
 
+  const currentProfile = profiles[currentIndex];
+
   if (!currentProfile) {
     return <div>Loading...</div>;
   }
 
-  const photos = currentProfile.photos && currentProfile.photos.length > 0 ? currentProfile.photos : [f1];
+  const photos = currentProfile.photos;
 
   return (
     <div className="swipe-screen container-fluid">
       <div className="sidebar">
-        <img src={f1} alt="Profile" className="profile-image img-fluid" />
+        <img src={currentProfile.photos[0]} alt="Profile" className="profile-image img-fluid" />
         <h6 className="username">Nala</h6>
         <div className="button-group">
           <button className="sidebar-button btn" onClick={() => handleViewChange('matches')}>

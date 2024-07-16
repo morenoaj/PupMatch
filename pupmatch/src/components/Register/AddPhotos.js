@@ -83,7 +83,7 @@ const AddPhotos = () => {
   return (
     <div className="add-photos-background">
       <Container maxWidth="xs" className="add-photos-container">
-      <img src={pawIcon} alt="Paw Icon" className="ppaw-icon" />
+        <img src={pawIcon} alt="Paw Icon" className="ppaw-icon" />
         <Typography variant="h4" className="title">Add photos</Typography>
         <Typography variant="body2" className="subtitle">Add at least 2 photos to continue</Typography>
         <Grid container spacing={2} className="photos-grid">
